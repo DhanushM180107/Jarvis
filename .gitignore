@@ -1,0 +1,102 @@
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# ===========================
+# Virtual Environments
+# ===========================
+.venv/
+venv/
+env/
+ENV/
+
+# ===========================
+# Environment & Secrets
+# ===========================
+.env
+.env.*
+*.key
+*.pem
+
+# ===========================
+# IDE / Editor
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ===========================
+# OS / System Files
+# ===========================
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+System Volume Information/
+*.lnk
+
+# ===========================
+# Logs & Temp Files
+# ===========================
+*.log
+log.txt
+chat_hystory.txt
+conv_history.txt
+history.txt
+speech_output.txt
+PyWhatKit_DB.txt
+
+# ===========================
+# Runtime Data Files
+# ===========================
+input.txt
+schedule.txt
+Alam_data.txt
+
+# ===========================
+# Binaries & Executables
+# ===========================
+*.exe
+*.dll
+*.so
+*.dylib
+chromedriver*
+
+# ===========================
+# Media (generated at runtime)
+# ===========================
+*.mp3
+*.wav
+*.gif
+*.png
+*.jpg
+*.jpeg
+*.bmp
+captured_image.*
+generated_image.*
+screenshot.*
+
+# ===========================
+# Build / Distribution
+# ===========================
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+
+# ===========================
+# Misc
+# ===========================
+.sixth/
+Jravis/
