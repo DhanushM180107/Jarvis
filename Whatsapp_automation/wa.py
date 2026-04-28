@@ -1,4 +1,7 @@
-import pywhatkit as kit
+try:
+    import pywhatkit as kit
+except ImportError:
+    kit = None
 import datetime
 from Brain.personality import jarvis_speak
 from os import getcwd
@@ -7,8 +10,10 @@ now = datetime.datetime.now()
 hour = now.hour
 minute = now.minute
 
+import os
+
 def clear_file():
-    with open(f"{getcwd()}\\input.txt","w") as file:
+    with open(os.path.join(getcwd(), "input.txt"), "w") as file:
         file.truncate(0)
         
 anubhav = "+919606348280"
@@ -33,7 +38,10 @@ def send_msg_wa():
                               output_text = input_text
                               if output_text.startswith("message is"):
                                   message =  output_text.replace("message is","")
-                                  kit.sendwhatmsg(anubhav,message,hour,minute+1)
-                                  jarvis_speak("Message sent successfully.", mood="success")
+                                  if kit:
+                                      kit.sendwhatmsg(anubhav,message,hour,minute+1)
+                                      jarvis_speak("Message sent successfully.", mood="success")
+                                  else:
+                                      jarvis_speak("pywhatkit not installed.", mood="error")
                                  
 

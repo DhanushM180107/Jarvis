@@ -16,8 +16,10 @@ from Automation.tab_automation import perform_browser_action
 from Automation.Youtube_play_back import perform_media_action
 from Automation.scrool_system import perform_scroll_action
 
+import os
+
 def clear_file():
-    with open(f"{getcwd()}\\input.txt","w") as file:
+    with open(os.path.join(getcwd(), "input.txt"), "w") as file:
         file.truncate(0)
 
 def Open_Brain(text):

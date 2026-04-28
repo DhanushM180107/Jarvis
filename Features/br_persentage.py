@@ -1,6 +1,13 @@
-import wmi
+try:
+    import wmi
+except ImportError:
+    wmi = None
+
 from Brain.personality import jarvis_speak
+
 def get_brightness_windows():
+    if wmi is None:
+        return 0
     try:
         w = wmi.WMI(namespace='wmi')
         brightness_methods = w.WmiMonitorBrightness()
@@ -10,6 +17,8 @@ def get_brightness_windows():
         return f"Error: {e}"
 
 def check_br_persentage():
+    if wmi is None:
+        jarvis_speak("Brightness reading is not supported on this OS.", mood="error")
+        return
     brightness = get_brightness_windows()
     jarvis_speak(f"Current Brightness: {brightness}%")
-

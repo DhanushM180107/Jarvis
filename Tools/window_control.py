@@ -1,9 +1,16 @@
 import pyautogui
-import win32gui
-import win32con
+
+try:
+    import win32gui
+    import win32con
+    WIN32_AVAILABLE = True
+except ImportError:
+    WIN32_AVAILABLE = False
 
 def minimize_window(app_name: str) -> tuple[bool, str]:
     """Minimizes a window by app name."""
+    if not WIN32_AVAILABLE:
+        return False, "Not supported on this OS"
     app_key = app_name.lower().strip()
     found_hwnd = None
     
@@ -25,6 +32,8 @@ def minimize_window(app_name: str) -> tuple[bool, str]:
 
 def minimize_active_window() -> tuple[bool, str]:
     """Minimizes the currently focused window."""
+    if not WIN32_AVAILABLE:
+        return False, "Not supported on this OS"
     try:
         hwnd = win32gui.GetForegroundWindow()
         if hwnd:

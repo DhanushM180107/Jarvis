@@ -1,14 +1,22 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+try:
+    from selenium import webdriver
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.chrome.service import Service
+    from selenium.webdriver.chrome.options import Options
+    from webdriver_manager.chrome import ChromeDriverManager
+    SELENIUM_AVAILABLE = True
+except ImportError:
+    SELENIUM_AVAILABLE = False
 from os import getcwd
 
-Recog_File = f"{getcwd()}\\input.txt"
+import os
+Recog_File = os.path.join(getcwd(), "input.txt")
 def listen():
+    if not SELENIUM_AVAILABLE:
+        print("Selenium is not available.")
+        return
     print("Support in Youtube @NetHyTech")
     # Setting up Chrome options with specific arguments
     chrome_options = Options()
@@ -33,7 +41,7 @@ def listen():
         print(f"Failed to initialize Chrome WebDriver: {e}")
         print("Attempting to use local chromedriver.exe")
         try:
-            service = Service(executable_path="chromedriver.exe")
+            service = Service()
             driver = webdriver.Chrome(service=service, options=chrome_options)
         except Exception as e2:
             print(f"Local chromedriver also failed: {e2}")
