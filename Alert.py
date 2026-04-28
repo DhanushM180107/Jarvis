@@ -1,23 +1,14 @@
 import os
-from winotify import Notification, audio
-from os import getcwd
+import sys
+
+# Ensure the root directory is in the Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from core.platform_loader import PlatformManager
+
+platform_manager = PlatformManager()
 
 def Alert(Text):
-    icon_path = r"C:\Users\chatu\OneDrive\Desktop\Jarvis\logo.png"
-
-    toast = Notification(
-        app_id="🟢 J.A.R.V.I.S.",
-        title=Text,
-        duration="long",
-        icon=icon_path
-    )
-
-    toast.set_audio(audio.Default, loop=False)
-
-
-    toast.add_actions(label="Click me", launch="https://www.google.com")
-    toast.add_actions(label="Dismiss", launch="https://www.google.com")
-
-
-    toast.show()
-
+    if platform_manager.notifications:
+        platform_manager.notifications.send_notification("🟢 J.A.R.V.I.S.", Text)
+    else:
+        print(f"ALERT: {Text}")

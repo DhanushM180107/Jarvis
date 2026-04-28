@@ -1,13 +1,26 @@
 import os
 import json
-from openai import OpenAI
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-load_dotenv()
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+try:
+    from openai import OpenAI
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+except ImportError:
+    client = None
+    print("Warning: openai module not found. AI capabilities will be limited.")
 
 def ask_gpt(user_input):
+    if not client:
+        # Fallback to general chat if OpenAI is not available
+        return {
+            "intent": "general_chat",
+            "response": "OpenAI module is missing. I cannot process complex requests.",
+            "parameters": {}
+        }
     try:
         response = client.chat.completions.create(
             model="gpt-4-turbo",

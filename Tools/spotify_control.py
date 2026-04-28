@@ -7,8 +7,12 @@ These commands work WITHOUT the "Jarvis" wake word for seamless music control.
 
 import pyautogui
 import time
-import win32gui
-import win32con
+try:
+    import win32gui
+    import win32con
+    WIN32_AVAILABLE = True
+except ImportError:
+    WIN32_AVAILABLE = False
 
 # Handle imports for both direct run and module import
 try:
@@ -23,6 +27,9 @@ SPOTIFY_STATE = {"is_open": False}
 
 def get_spotify_window() -> int | None:
     """Find Spotify window handle."""
+    if not WIN32_AVAILABLE:
+        return None
+        
     result = None
     
     def callback(hwnd, _):
@@ -43,6 +50,9 @@ def get_spotify_window() -> int | None:
 
 def ensure_spotify_focused() -> bool:
     """Ensure Spotify is open, focused, and ready for input."""
+    if not WIN32_AVAILABLE:
+        return False
+        
     hwnd = get_spotify_window()
     
     if not hwnd:

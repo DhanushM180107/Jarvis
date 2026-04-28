@@ -1,12 +1,23 @@
-import win32gui
-import win32con
-import win32com.client
+import sys
+import os
+
+try:
+    import win32gui
+    import win32con
+    import win32com.client
+    WIN32_AVAILABLE = True
+except ImportError:
+    WIN32_AVAILABLE = False
 
 def focus_window(app_name: str) -> bool:
     """
     Attempts to find a window matching the app_name and bring it to foreground.
     Case insensitive partial match on window title.
     """
+    if not WIN32_AVAILABLE:
+        print(f"Window focusing not supported on this OS. Skipping focus for {app_name}")
+        return False
+        
     app_key = app_name.lower().strip()
     
     found_hwnd = None
