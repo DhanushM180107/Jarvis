@@ -6,11 +6,14 @@ try:
 except ImportError:
     pass
 
+client = None
 try:
     from openai import OpenAI
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    api_key = os.getenv("OPENAI_API_KEY")
+    if api_key:
+        client = OpenAI(api_key=api_key)
+    print("Warning: openai module not found or no API key. AI capabilities will be limited.")
 except ImportError:
-    client = None
     print("Warning: openai module not found. AI capabilities will be limited.")
 
 def ask_gpt(user_input):
@@ -18,7 +21,7 @@ def ask_gpt(user_input):
         # Fallback to general chat if OpenAI is not available
         return {
             "intent": "general_chat",
-            "response": "OpenAI module is missing. I cannot process complex requests.",
+            "response": "OpenAI is not configured. Using basic mode.",
             "parameters": {}
         }
     try:
@@ -58,6 +61,6 @@ Respond like this:
     except Exception as e:
         return {
             "intent": "general_chat",
-            "response": "Sorry, I encountered an error.",
+            "response": f"Sorry, I encountered an error: {str(e)}",
             "parameters": {}
         }
